@@ -1,0 +1,16 @@
+[package]
+name = "kerno"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Python interface, Rust execution core for AI runtimes."
+license = "MIT"
+repository = "https://github.com/Gabrielbsb21/kerno"
+publish = false
+
+[lib]
+name = "_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "0.30.1"

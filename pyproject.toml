@@ -1,0 +1,59 @@
+[project]
+name = "kerno"
+dynamic = ["version"]
+description = "Python interface, Rust execution core for AI runtimes."
+readme = "README.md"
+requires-python = ">=3.13"
+license = "MIT"
+license-files = ["LICENSE"]
+
+[project.urls]
+Repository = "https://github.com/Gabrielbsb21/kerno"
+Issues = "https://github.com/Gabrielbsb21/kerno/issues"
+
+[dependency-groups]
+dev = [
+    "maturin>=1.15,<2",
+    "pytest>=9,<10",
+    "ruff>=0.17,<1",
+]
+
+[tool.maturin]
+module-name = "kerno._core"
+python-source = "python"
+features = ["pyo3/extension-module"]
+exclude = [".venv/**", "target/**", "dist/**"]
+include = [
+    { path = "tests/**", format = "sdist" },
+    { path = "scripts/**", format = "sdist" },
+]
+
+[tool.uv]
+cache-keys = [
+    { file = "pyproject.toml" },
+    { file = "Cargo.toml" },
+    { file = "Cargo.lock" },
+    { file = "rust-toolchain.toml" },
+    { file = "src/**/*.rs" },
+    { file = "python/**/*.pyi" },
+    { file = "python/**/py.typed" },
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "D100", "D103", "D104", "D419"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+"**/*.pyi" = ["D"]
+
+[build-system]
+requires = ["maturin>=1.15,<2"]
+build-backend = "maturin"
